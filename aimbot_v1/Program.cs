@@ -20,8 +20,11 @@ namespace aimbot_v1
             {
                 PlayerInfo Info = new PlayerInfo(vam);
 
-                Info.PrintMyPlayer();
-                Console.ReadKey();
+                while (true)
+                {
+                    Info.PrintEnemey(5);
+                    Thread.Sleep(100);
+                }
 
             }
            

@@ -19,6 +19,7 @@ namespace aimbot_v1
         public struct Player
         {
             public float X, Y, Z;
+            public int Enemey_Team, MyTeam;
         }
 
 
@@ -61,13 +62,14 @@ namespace aimbot_v1
         public void PrintEnemey(int count)
         {
 
-            for (int i = 0; i < count; i++)
+            for (int i = 1; i <= count; i++)
             {
                 Player _enemey = GetEnemeyPlayer(i);
-
                 Console.WriteLine(_enemey.X);
                 Console.WriteLine(_enemey.Y);
                 Console.WriteLine(_enemey.Z);
+                Console.WriteLine(_enemey.MyTeam);
+                Console.WriteLine(_enemey.Enemey_Team);
             }
         }
 
@@ -121,22 +123,37 @@ namespace aimbot_v1
 
         //}
 
-        static Player GetEnemeyPlayer(int i)
+        public static Player GetEnemeyPlayer(int i) // Virker ikke optimalt, udskriver localplayer.
         {
             Player _Enemey;
+            _Enemey.X = 0;
+            _Enemey.Y = 0;
+            _Enemey.Z = 0;
+
             int address = baseClient + Offsets.oLocalPlayer;
+            int LocalPLayer = vam.ReadInt32((IntPtr)address);
 
-             address = baseClient + Offsets.oEntityList + (i * Offsets.oEntityListLoopDis);
-             int PictoPic = vam.ReadInt32((IntPtr)address);
+            address = LocalPLayer + Offsets.oTeam;
+            _Enemey.MyTeam = vam.ReadInt32((IntPtr)address);
 
-             address = PictoPic + Offsets.xpos;
-             _Enemey.X = vam.ReadFloat((IntPtr)address);
+            address = baseClient + Offsets.oEntityList + (i * Offsets.oEntityListLoopDis);
+            int PictoPic = vam.ReadInt32((IntPtr)address);
 
-             address = PictoPic + Offsets.ypos;
-             _Enemey.Y = vam.ReadFloat((IntPtr)address);
+            address = PictoPic + Offsets.oTeam;
+            _Enemey.Enemey_Team = vam.ReadInt32((IntPtr)address);
 
-             address = PictoPic + Offsets.zpos;
-             _Enemey.Z = vam.ReadFloat((IntPtr)address)+ 64.063312f;
+            if (_Enemey.Enemey_Team != _Enemey.MyTeam)
+            {
+                address = PictoPic + Offsets.xpos;
+                _Enemey.X = vam.ReadFloat((IntPtr)address);
+
+                address = PictoPic + Offsets.ypos;
+                _Enemey.Y = vam.ReadFloat((IntPtr)address);
+
+                address = PictoPic + Offsets.zpos;
+                _Enemey.Z = vam.ReadFloat((IntPtr)address) + 64.063312f;
+                return _Enemey;
+            }
             return _Enemey;
         }
     }
