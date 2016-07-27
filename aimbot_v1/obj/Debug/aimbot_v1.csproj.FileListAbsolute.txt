@@ -1,0 +1,6 @@
+c:\users\jakob\documents\visual studio 2015\Projects\aimbot_v1\aimbot_v1\bin\Debug\aimbot_v1.exe.config
+c:\users\jakob\documents\visual studio 2015\Projects\aimbot_v1\aimbot_v1\bin\Debug\aimbot_v1.exe
+c:\users\jakob\documents\visual studio 2015\Projects\aimbot_v1\aimbot_v1\bin\Debug\aimbot_v1.pdb
+c:\users\jakob\documents\visual studio 2015\Projects\aimbot_v1\aimbot_v1\bin\Debug\VAMemory.dll
+c:\users\jakob\documents\visual studio 2015\Projects\aimbot_v1\aimbot_v1\obj\Debug\aimbot_v1.exe
+c:\users\jakob\documents\visual studio 2015\Projects\aimbot_v1\aimbot_v1\obj\Debug\aimbot_v1.pdb
