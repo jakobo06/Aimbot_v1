@@ -10,24 +10,32 @@ namespace aimbot_v1
 {
     public class Program
     {
+        struct Vector
+        {
+            public int X, Y, Z;
+        }
+
+        struct FloatVector
+        {
+            public float X, Y, Z;
+        }
+
         public static string process = "csgo";
         static VAMemory vam = new VAMemory(process);
         public static int baseClient, baseEngine;
 
         static void Main(string[] args)
         {
+            PlayerInfo Info = new PlayerInfo(vam);
+
             if (GetModuleAddy())
             {
-                PlayerInfo Info = new PlayerInfo(vam);
-
                 while (true)
                 {
                     Info.PrintEnemey(5);
                     Thread.Sleep(100);
                 }
-
             }
-           
         }
 
         static bool GetModuleAddy()
@@ -58,15 +66,5 @@ namespace aimbot_v1
                 return false;
             }
         }
-
-        struct Vector
-        {
-            public int X, Y, Z;
-        }
-
-        struct FloatVector
-        {
-            public float X, Y, Z;
-        }
-    }  
+    }
 }

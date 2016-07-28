@@ -11,6 +11,7 @@ namespace aimbot_v1
         static VAMemory vam;
         public float X, Y, Z;
         public static int baseClient;
+
         public struct Angle
         {
             public float F, S;
@@ -28,9 +29,10 @@ namespace aimbot_v1
             GetModuleAddy();
             vam = Vam;
         }
-        public Player GetMyPlayer() 
+
+        public Player GetMyPlayer()
         {
-            Player _temp;
+            Player _temp = new Player();
 
             int address = baseClient + Offsets.oLocalPlayer;
             int LocalPLayer = vam.ReadInt32((IntPtr)address);
@@ -45,6 +47,7 @@ namespace aimbot_v1
             _temp.Z = vam.ReadFloat((IntPtr)address) + 64.063312f;
             return _temp;
         }
+
         public void PrintMyPlayer()
         {
             Player _temp = GetMyPlayer();
@@ -59,47 +62,16 @@ namespace aimbot_v1
 
         }
 
-        public void PrintEnemey(int count)
-        {
+        public static double DistBetween2Players(Player player1, Player player2)
+        { // player 2 længest væk
 
-            for (int i = 1; i <= count; i++)
-            {
-                Player _enemey = GetEnemeyPlayer(i);
-                Console.WriteLine(_enemey.X);
-                Console.WriteLine(_enemey.Y);
-                Console.WriteLine(_enemey.Z);
-                Console.WriteLine(_enemey.MyTeam);
-                Console.WriteLine(_enemey.Enemey_Team);
-            }
+            return Math.Sqrt(Math.Pow(player2.X - player1.X, 2) + Math.Pow(player2.Y - player1.Y, 2) + Math.Pow(player2.Z - player1.Z, 2));
         }
 
-        static bool GetModuleAddy()
+        public static double DistBetween2Players(double p1x, double p1y, double p1z, double p2x, double p2y, double p2z)
         {
-            try
-            {
-                Process[] p = Process.GetProcessesByName("csgo");
 
-                if (p.Length > 0)
-                {
-                    foreach (ProcessModule m in p[0].Modules) // kikker igennem alle filer under csgo (process)
-                    {
-                        if (m.ModuleName == "client.dll")
-                        {
-                            baseClient = (int)m.BaseAddress; // vi får addressen af client.dll, som er vores base address.
-                            return true;
-                        }
-                    }
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return Math.Sqrt(Math.Pow(p2x - p1x, 2) + Math.Pow(p2y - p1y, 2) + Math.Pow(p2z - p1z, 2));
         }
 
         static Angle GetMyAngle()
@@ -122,6 +94,19 @@ namespace aimbot_v1
         //{
 
         //}
+
+        public void PrintEnemey(int count)
+        {
+            for (int i = 1; i <= count; i++)
+            {
+                Player _enemey = GetEnemeyPlayer(i);
+                Console.WriteLine(_enemey.X);
+                Console.WriteLine(_enemey.Y);
+                Console.WriteLine(_enemey.Z);
+                Console.WriteLine(_enemey.MyTeam);
+                Console.WriteLine(_enemey.Enemey_Team);
+            }
+        }
 
         public static Player GetEnemeyPlayer(int i) // Virker ikke optimalt, udskriver localplayer.
         {
@@ -155,6 +140,34 @@ namespace aimbot_v1
                 return _Enemey;
             }
             return _Enemey;
+        }
+
+        public static bool GetModuleAddy()
+        {
+            try
+            {
+                Process[] p = Process.GetProcessesByName("csgo");
+
+                if (p.Length > 0)
+                {
+                    foreach (ProcessModule m in p[0].Modules) // kikker igennem alle filer under csgo (process)
+                    {
+                        if (m.ModuleName == "client.dll")
+                        {
+                            baseClient = (int)m.BaseAddress; // vi får addressen af client.dll, som er vores base address.
+                            return true;
+                        }
+                    }
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
