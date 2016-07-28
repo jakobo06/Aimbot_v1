@@ -8,8 +8,8 @@ namespace aimbot_v1
 {
     static class Offsets
     {
-        public static int oLocalPlayer = 0x00A31504;
-        public static int oEntityList = 0x04A4CCC4;
+        public static int oLocalPlayer = 0x00A323E4;
+        public static int oEntityList = 0x04A4FCA4;
         public static int oCrosshair = 0x0000AA44;
         public static int oTeam = 0x0F0;
         public static int oHealth = 0x000000FC;

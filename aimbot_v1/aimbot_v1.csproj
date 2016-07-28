@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AngleParser.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="PlayerInfo.cs" />
     <Compile Include="Program.cs" />

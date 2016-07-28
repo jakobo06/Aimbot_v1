@@ -62,6 +62,13 @@ namespace aimbot_v1
 
         }
 
+        public void PrintDistBetween2Players(int i)
+        {
+            Player _MyPLayer = GetMyPlayer();
+            Player _Enemey = GetEnemeyPlayer(i);
+            Console.WriteLine(DistBetween2Players(_MyPLayer, _Enemey)); 
+        }
+
         public static double DistBetween2Players(Player player1, Player player2)
         { // player 2 længest væk
 
@@ -100,15 +107,14 @@ namespace aimbot_v1
             for (int i = 1; i <= count; i++)
             {
                 Player _enemey = GetEnemeyPlayer(i);
-                Console.WriteLine(_enemey.X);
-                Console.WriteLine(_enemey.Y);
-                Console.WriteLine(_enemey.Z);
-                Console.WriteLine(_enemey.MyTeam);
-                Console.WriteLine(_enemey.Enemey_Team);
+
+                Console.WriteLine("x:" + _enemey.X);
+                Console.WriteLine("y: "+ _enemey.Y);
+                Console.WriteLine("z: "+ _enemey.Z);
             }
         }
 
-        public static Player GetEnemeyPlayer(int i) // Virker ikke optimalt, udskriver localplayer.
+        public static Player GetEnemeyPlayer(int i) 
         {
             Player _Enemey;
             _Enemey.X = 0;

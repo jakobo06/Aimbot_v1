@@ -32,8 +32,8 @@ namespace aimbot_v1
             {
                 while (true)
                 {
-                    Info.PrintEnemey(5);
-                    Thread.Sleep(100);
+                    Info.PrintDistBetween2Players(3);
+                    Thread.Sleep(300);
                 }
             }
         }
