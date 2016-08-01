@@ -15,10 +15,10 @@ namespace aimbot_v1
         }
 
         // ops. hvad max angelen er. da 180 -> -180 = 361
-        public float CalcuateAnglePlus(float first, float last)
+        public Double CalcuateAnglePlus(double first, double last)
         { // -180 -> 180
 
-            float value = first + last;
+            double value = first + last;
 
             if (value >= 180)
             {
@@ -33,10 +33,22 @@ namespace aimbot_v1
             }
         }
 
-        public float CalcuateAngleMinus(float first, float last)
+        public double minus(double input)
+        {
+            if (input < 0)
+            {
+                return input * -1;
+            }
+            else
+            {
+                return input;
+            }
+        }
+
+        public double CalcuateAngleMinus(double first, double last)
         { // -180 -> 180
 
-            float value = first - last;
+            double value = first - last;
 
             if (value >= 180)
             {

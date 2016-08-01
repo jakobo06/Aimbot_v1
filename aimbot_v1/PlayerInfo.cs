@@ -11,15 +11,16 @@ namespace aimbot_v1
         static VAMemory vam;
         public float X, Y, Z;
         public static int baseClient;
+        AngleParser parser = new AngleParser();
 
         public struct Angle
         {
-            public float F, S;
+            public double F, S;
         }
 
         public struct Player
         {
-            public float X, Y, Z;
+            public double X, Y, Z;
             public int Enemey_Team, MyTeam;
         }
 
@@ -69,6 +70,39 @@ namespace aimbot_v1
             Console.WriteLine(DistBetween2Players(_MyPLayer, _Enemey)); 
         }
 
+
+        public void testangel()
+        {
+            GetEnemeyPlayer(2);
+            GetMyPlayer();
+
+            Angle test = calangle(GetMyPlayer(), GetEnemeyPlayer(1));
+            Console.WriteLine(test.F);
+            Console.WriteLine(test.S);
+        }
+
+        public Angle calangle(Player Myplayer, Player Enemy)
+        {
+            Angle _temp;
+            double[] dist = { (Myplayer.X - Enemy.X), (Myplayer.Y - Enemy.Y),(Myplayer.Z - Enemy.Z) };
+            double hyp = Math.Sqrt(dist[0] * dist[0] + dist[1] * dist[1]);
+            _temp.F = (double)(Math.Asin(dist[2] / hyp) * 57.295779513082f);
+            _temp.S = (double)(Math.Atan(dist[1] / dist[0]) * 57.295779513082f);
+            if (dist[0] >= 0.0)
+            {
+                _temp.S += 180f;
+            }
+            
+
+
+            //parser.CalcuateAnglePlus(_temp.F, _temp.S);
+            //parser.CalcuateAngleMinus(_temp.F, _temp.S);
+
+
+
+            return _temp;
+        }
+
         public static double DistBetween2Players(Player player1, Player player2)
         { // player 2 længest væk
 
@@ -81,7 +115,7 @@ namespace aimbot_v1
             return Math.Sqrt(Math.Pow(p2x - p1x, 2) + Math.Pow(p2y - p1y, 2) + Math.Pow(p2z - p1z, 2));
         }
 
-        static Angle GetMyAngle()
+        public static Angle GetMyAngle()
         {
             Angle _temp;
             int address = baseClient + Offsets.oLocalPlayer;
@@ -133,7 +167,9 @@ namespace aimbot_v1
             address = PictoPic + Offsets.oTeam;
             _Enemey.Enemey_Team = vam.ReadInt32((IntPtr)address);
 
-            if (_Enemey.Enemey_Team != _Enemey.MyTeam)
+            address = PictoPic + Offsets.oDormant;
+
+            if (_Enemey.Enemey_Team !=_Enemey.MyTeam & !vam.ReadBoolean((IntPtr)address))
             {
                 address = PictoPic + Offsets.xpos;
                 _Enemey.X = vam.ReadFloat((IntPtr)address);
