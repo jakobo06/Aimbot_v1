@@ -34,6 +34,7 @@ namespace aimbot_v1
         public Player GetMyPlayer()
         {
             Player _temp = new Player();
+            int health;
 
             int address = baseClient + Offsets.oLocalPlayer;
             int LocalPLayer = vam.ReadInt32((IntPtr)address);
@@ -46,21 +47,8 @@ namespace aimbot_v1
 
             address = LocalPLayer + Offsets.zpos;
             _temp.Z = vam.ReadFloat((IntPtr)address) + 64.063312f;
+
             return _temp;
-        }
-
-        public void PrintMyPlayer()
-        {
-            Player _temp = GetMyPlayer();
-
-            Console.WriteLine(_temp.X);
-            Console.WriteLine(_temp.Y);
-            Console.WriteLine(_temp.Z);
-
-            Angle _Angle = GetMyAngle();
-            Console.WriteLine(_Angle.F);
-            Console.WriteLine(_Angle.S);
-
         }
 
         public void PrintDistBetween2Players(int i)
@@ -77,8 +65,8 @@ namespace aimbot_v1
             GetMyPlayer();
 
             Angle test = calangle(GetMyPlayer(), GetEnemeyPlayer(1));
-            Console.WriteLine(test.F);
-            Console.WriteLine(test.S);
+            //Console.WriteLine(test.F);
+            //Console.WriteLine(test.S);
         }
 
         public Angle calangle(Player Myplayer, Player Enemy)
@@ -179,6 +167,7 @@ namespace aimbot_v1
 
                 address = PictoPic + Offsets.zpos;
                 _Enemey.Z = vam.ReadFloat((IntPtr)address) + 64.063312f;
+
                 return _Enemey;
             }
             return _Enemey;
